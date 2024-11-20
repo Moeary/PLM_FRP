@@ -18,16 +18,18 @@ Installation
 
 ### Installation
 
+1. Clone the repository:
 ```bash
-git clone 
+git clone https://github.com/Moeary/FRP_FPP.git
 ```
 
+2. Create and activate a virtual environment using conda:
+```bash
+conda create -n FPP
+conda activate FPP
+```
 
-### Create virtual venv
-
-
-
-To install the required packages, run:
+3. Install the required packages:
 
 ```bash
 pip install tensorflow==2.1.5 scikit-learn==0.24.2 xgboost==1.4.2 pandas==1.1.5 numpy==1.19.5
@@ -49,10 +51,14 @@ To run the LambdaRank model, execute:
 python LambdaRank.py
 ```
 
-3. Cross-Validation(Focus on )
+3. Cross-Validation (Focus on 216D Selected Feature)
 
-To perform cross-validation, run:
+The cross-validation script focuses on evaluating the model using a selected set of 216-dimensional features. This process helps in assessing the model's performance and robustness. To perform cross-validation, run:
 
 ```bash
 python cross_vallidation.py
 ```
+
+### Significance
+
+Ferroptosis, a recently discovered form of regulated cell death characterized by iron-dependent lipid peroxidation, has emerged as a critical process in various pathologies, including cancer, neurodegenerative disorders, and ischemia-reperfusion injury. Identifying and characterizing FRPs is paramount for unraveling the molecular mechanisms underlying ferroptosis, enabling the development of targeted therapeutic interventions, and ultimately improving patient outcomes. Traditional experimental methods for identifying and characterizing FRPs are time-consuming and resource-intensive. Computational methods, particularly those based on machine learning, offer a promising alternative for large-scale and efficient FRP prediction. Our model, FPP, leverages deep learning and pre-trained protein language models to achieve state-of-the-art performance in FRP prediction, significantly advancing the field of ferroptosis research.
