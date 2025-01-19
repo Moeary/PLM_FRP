@@ -1,4 +1,4 @@
-# Ferroptosis-Related Protein Prediction (FPP)
+# Pretrain Language Model-based Ferroptosis-Related Protein Prediction (PLM-FRP)
 
 ### Introduction
 
