@@ -20,13 +20,13 @@ Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Moeary/FRP_FPP.git
+git clone https://github.com/Moeary/PLM_FRP.git
 ```
 
 2. Create and activate a virtual environment using conda:
 ```bash
-conda create -n FPP
-conda activate FPP
+conda create -n FRP
+conda activate FRP
 ```
 
 3. Install the required packages:
