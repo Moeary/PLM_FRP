@@ -13,6 +13,7 @@ from tensorflow.keras.layers import Conv1D, MaxPooling1D, Flatten, Dense, Dropou
 from tensorflow.keras.callbacks import ModelCheckpoint
 import argparse
 from tensorflow.keras.utils import plot_model
+import csv
 
 # --- Data Loading and Preprocessing ---
 def load_data(file_paths):
@@ -77,7 +78,7 @@ def build_nb_model():
 
 def build_xgb_model():
     """Build XGBoost model."""
-    return XGBClassifier(max_depth=3, learning_rate=0.2, n_estimators=500, min_child_weight=1, max_delta_step=0, subsample=0.8, colsample_bytree=0.8, reg_alpha=0, reg_lambda=0.4, scale_pos_weight=0.8, objective='binary:logistic', eval_metric='auc', seed=1440, gamma=0)
+    return XGBClassifier(max_depth=3, learning_rate=0.2, n_estimators=500)
 
 def build_bilstm_model(input_shape):
     """Build BiLSTM model."""
@@ -149,6 +150,12 @@ def main(args):
             'negative_train': ["feature/S-FPSSM/negative_train.csv"],
             'positive_test': ["feature/S-FPSSM/positive_test.csv"],
             'negative_test': ["feature/S-FPSSM/negative_test.csv"]
+        },
+        'protbert': {
+            'positive_train': ["feature/ProtBERT/positive_train.csv"],
+            'negative_train': ["feature/ProtBERT/negative_train.csv"],
+            'positive_test': ["feature/ProtBERT/positive_test.csv"],
+            'negative_test': ["feature/ProtBERT/negative_test.csv"]
         },
     }
 
@@ -264,9 +271,28 @@ def main(args):
     print(f"Specificity: {specificity}")
     print(f"MCC: {mcc}")
 
+    # save results to CSV
+    results = {
+        'Features': args.features,
+        'Classifier': args.classifier,
+        'Accuracy': accuracy,
+        'Precision': specificity,
+        'Recall': recall,
+        'MCC': mcc,
+    }
+
+    with open('evaluation_results.csv', 'a', newline='') as csvfile:
+        fieldnames = ['Features', 'Classifier', 'Accuracy', 'Precision', 'Recall', 'MCC']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        if csvfile.tell() == 0:
+            writer.writeheader()
+
+        writer.writerow(results)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Feature selection and classifier choice")
-    parser.add_argument('--features', type=str, required=True, help="Select feature combination, separated by '+': 'aac','aadp','cksaap','dde','esm1b','esm2','gtpc','kbigram','sfpssm'")
+    parser.add_argument('--features', type=str, required=True, help="Select feature combination, separated by '+': 'aac','aadp','cksaap','dde','esm1b','esm2','gtpc','kbigram','sfpssm','protbert'")
     parser.add_argument('--classifier', type=str, choices=['cnn', 'svm', 'rf', 'nb', 'xgb', 'bilstm'], required=True, help="Select classifier: 'cnn', 'svm', 'rf', 'nb', 'xgb', 'bilstm'")
     args = parser.parse_args()
     main(args)
