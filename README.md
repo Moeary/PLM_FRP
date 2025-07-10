@@ -25,8 +25,8 @@ git clone https://github.com/Moeary/PLM_FRP.git
 
 2. Create and activate a virtual environment using conda:
 ```bash
-conda create -n FRP
-conda activate FRP
+conda create -n PLM_FRP
+conda activate PLM_FRP
 ```
 
 3. Install the required packages:
@@ -39,17 +39,34 @@ pip install tensorflow==2.1.5 scikit-learn==0.24.2 xgboost==1.4.2 pandas==1.1.5 
 
 1. Training the Model
 
-Prepare your feature files in the specified format.
+The `train.py` script allows you to train and evaluate different models with various feature combinations.
 
-Run the training script with the desired features and classifier
+**Usage:**
+```bash
+python train.py --features <feature1>+<feature2> --classifier <classifier_name>
+```
+
+**Arguments:**
+* `--features`: Select one or more features to use for training. Multiple features can be combined using `+`.
+  * Available features: `aac`, `aadp`, `cksaap`, `dde`, `esm1b`, `esm2`, `gtpc`, `kbigram`, `sfpssm`, `protbert`.
+* `--classifier`: Select the classifier to use.
+  * Available classifiers: `cnn`, `svm`, `rf`, `nb`, `xgb`, `bilstm`.
+
+**Example:**
+```bash
+python train.py --features dde+esm1b --classifier cnn
+```
+The evaluation results (Accuracy, AUC, Sensitivity, Specificity, MCC) will be printed to the console and appended to `evaluation_results.csv`.
 
 2. LambdaRank
 
-To run the LambdaRank model, execute:
+To run the LambdaRank model for feature selection, execute:
 
 ```bash
 python LambdaRank.py
 ```
+
+**Note:** The `LambdaRank.py` script is provided as an example of a feature selection method and its results do not represent the final performance of the PLM_FRP model.
 
 3. Cross-Validation (Focus on 216D Selected Feature)
 
